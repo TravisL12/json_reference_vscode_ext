@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 
 import getHoverProvider from "./hoverProvider";
 import getSearchProvider from "./searchProvider";
+import getSidebarProvider from "./sidebarProvider";
 import { getJsonFilePath, searchForComponent } from "./utils";
 
 export function activate(context: vscode.ExtensionContext) {
@@ -25,7 +26,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   const jsonSearchReferences = vscode.commands.registerCommand(
-    "extension.executeFunctionCommand",
+    "extension.searchCommand",
     async (results: string) => {
       await searchForComponent([results]);
     }
@@ -34,6 +35,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     getHoverProvider(jsonFilePath),
     getSearchProvider(jsonFilePath),
+    getSidebarProvider(jsonFilePath),
     copyTextCommand,
     jsonSearchReferences
   );
